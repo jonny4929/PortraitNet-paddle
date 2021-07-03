@@ -4,10 +4,11 @@ from paddle.nn import layer
 from .mobilenet_v2 import MobileNet
 
 class backbone(MobileNet):
-    def __init__(self, class_dim, scale, pretrained='MobileNetV2_ssld_pretrained.pdparams'):
+    def __init__(self, class_dim, scale, pretrained=None):
         super().__init__(class_dim=class_dim, scale=scale)
         self.channel_list=[16,24,32,96,320]
-        self.set_state_dict(paddle.load(pretrained))
+        if pretrained:
+            self.set_state_dict(paddle.load(pretrained))
     
     def forward(self, inputs):
         feature_list=[]
